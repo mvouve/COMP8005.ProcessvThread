@@ -5,17 +5,26 @@
 #include <QObject>
 #include <QTime>
 #include <QLocalServer>
+#include <QDir>
+#include <QTextStream>
+#include <QVector>
+#include "blockingqueue.h"
+#include "threadsafequeue.h"
+#include "worker.h"
 
 class Controller : public QObject
 {
 public:
-    Controller(QString);
+    explicit Controller(QString dir, qint32 numOfChildern, QObject * parent);
+    void run();
 
 private:
     const QString RootDir;
     const qint32 requiredChildern;
-    const QTime stopWatch;
-    const QLocalServer socket;
+    QTime stopWatch;
+    const QLocalServer comm;
+    BlockingQueue<QString> checksumQueue;
+    ThreadSafeQueue<QString> fileQueue;
 };
 
 #endif // CONTROLLER_H

@@ -1,11 +1,13 @@
 #ifndef UTILITY_H
 #define UTILITY_H
 
-#include
+#include <QString>
+#include <QList>
+#include <QDir>
 
 namespace mvouve
 {
-    getDirectoryListing(QString);
+    QList<QString> getDirectoryListing(QString);
 }
 
 #endif // UTILITY_H
