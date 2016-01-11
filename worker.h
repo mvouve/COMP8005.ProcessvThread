@@ -3,6 +3,11 @@
 
 #include <QObject>
 #include <QThread>
+#include <QTextStream>
+#include <QDebug>
+#include <QFileInfo>
+#include <QDir>
+#include <QCryptographicHash>
 #include "blockingqueue.h"
 #include "threadsafequeue.h"
 
@@ -10,12 +15,14 @@ class Worker : public QThread
 {
 Q_OBJECT
 public:
-    explicit Worker(BlockingQueue<QString> * checksums, ThreadSafeQueue<QString> * files, QObject * parent = 0) : QThread(parent), fileQueue(files), checksumQueue(checksums) {}
+    explicit Worker(quint32 threadNo, quint32 totalThreads, quint64 maxPrime, QObject * parent = nullptr) : QThread(parent), threadNo_(threadNo), totalThreads_(totalThreads),
+        maxPrime_(maxPrime) {}
     void run();
 private:
-    QStringList work;
-    ThreadSafeQueue<QString> * fileQueue;
-    BlockingQueue<QString> * checksumQueue;
+    const qint32 totalThreads_;
+    const qint32 threadNo_;
+    const quint64 maxPrime_;
+
 signals:
     void resultReady(const QString);
 };

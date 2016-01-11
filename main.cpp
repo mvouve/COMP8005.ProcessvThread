@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
     parser.process(a);
 
     const QStringList args = parser.positionalArguments();
-    Controller ctl(args.at(0), 5, 0);
+    Controller ctl(args.at(0), 8, 0);
     ctl.run();
 
     return a.exec();

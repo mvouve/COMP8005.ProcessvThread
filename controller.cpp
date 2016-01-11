@@ -1,4 +1,5 @@
 #include "controller.h"
+#include <unistd.h>
 
 Controller::Controller(QString dir, qint32 numOfChildern, QObject * parent = 0) : RootDir(dir), requiredChildern(numOfChildern), QObject(parent)
 {
@@ -17,9 +18,13 @@ void Controller::run() {
         fileQueue.enqueue(RootDir + *itr);
     }
 
-    for(int i = 0; i < requiredChildern; ++i) {
-        workers.append(new Worker(&checksumQueue, &fileQueue));
-        workers.last()->start();
+    for(int i = 1; i <= requiredChildern; ++i) {
+        workers.append(new Worker(i, requiredChildern, 100000000));
+        if(!fork()){
+            workers.last()->run();
+            break;
+        }
+        //workers.last()->start();
     }
 
 
