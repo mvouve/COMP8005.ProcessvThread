@@ -1,9 +1,9 @@
 #include "worker.h"
 #include <cmath>
+#include <unistd.h>
 
 void Worker::run()
 {
-    QString work;
     bool notPrime;
 
     for(quint64 i = (quint64) threadNo_; i < maxPrime_; i += totalThreads_)
@@ -23,10 +23,12 @@ void Worker::run()
         }
         if(!notPrime)
         {
-           QTextStream(stdout) << i << "\n";
+            QTextStream(out_) << i << "\n";
         }
     }
 
 
 
 }
+
+

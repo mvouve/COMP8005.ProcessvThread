@@ -10,16 +10,14 @@ CONFIG -= app_bundle
 TEMPLATE = app
 
 SOURCES += main.cpp \
-    utility.cpp \
     controller.cpp \
     worker.cpp \
-    blockingqueue.cpp \
-    threadsafequeue.cpp
+    pthreadworker.cpp \
+    processworker.cpp
 
 HEADERS += \
-    utility.h \
     controller.h \
     worker.h \
-    blockingqueue.h \
-    threadsafequeue.h
+    pthreadworker.h \
+    processworker.h
 

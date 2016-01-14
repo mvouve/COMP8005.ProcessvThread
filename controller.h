@@ -2,29 +2,28 @@
 #define CONTROLLER_H
 
 #include <QString>
-#include <QObject>
 #include <QTime>
-#include <QLocalServer>
-#include <QDir>
-#include <QTextStream>
 #include <QVector>
-#include "blockingqueue.h"
-#include "threadsafequeue.h"
 #include "worker.h"
+#include "pthreadworker.h"
+#include "processworker.h"
 
-class Controller : public QObject
+enum class Concurrency {
+    process,
+    thread
+};
+
+class Controller
 {
 public:
-    explicit Controller(QString dir, qint32 numOfChildern, QObject * parent);
+    explicit Controller(Concurrency mode, quint64 maxPrime, qint32 numOfChildern) : mode_(mode), requiredChildern_(numOfChildern), maxPrime_(maxPrime) {}
     void run();
 
 private:
-    const QString RootDir;
-    const qint32 requiredChildern;
-    QTime stopWatch;
-    const QLocalServer comm;
-    BlockingQueue<QString> checksumQueue;
-    ThreadSafeQueue<QString> fileQueue;
+    const Concurrency mode_;
+    const qint32 requiredChildern_;
+    const quint64 maxPrime_;
+    QTime stopWatch_;
 };
 
 #endif // CONTROLLER_H

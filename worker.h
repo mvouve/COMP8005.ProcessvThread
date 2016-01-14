@@ -1,30 +1,25 @@
 #ifndef WORKER_H
 #define WORKER_H
 
-#include <QObject>
-#include <QThread>
+#include <fstream>
+#include <QTypeInfo>
+#include <QFile>
 #include <QTextStream>
-#include <QDebug>
-#include <QFileInfo>
-#include <QDir>
-#include <QCryptographicHash>
-#include "blockingqueue.h"
-#include "threadsafequeue.h"
+#include <QSystemSemaphore>
 
-class Worker : public QThread
+class Worker
 {
-Q_OBJECT
 public:
-    explicit Worker(quint32 threadNo, quint32 totalThreads, quint64 maxPrime, QObject * parent = nullptr) : QThread(parent), threadNo_(threadNo), totalThreads_(totalThreads),
+    explicit Worker(QFile * out, quint32 threadNo, quint32 totalThreads, quint64 maxPrime) : out_(out), totalThreads_(totalThreads), threadNo_(threadNo),
         maxPrime_(maxPrime) {}
     void run();
+    virtual int start() = 0;
+    virtual void wait() = 0;
 private:
+    QFile  * out_;
     const qint32 totalThreads_;
     const qint32 threadNo_;
     const quint64 maxPrime_;
-
-signals:
-    void resultReady(const QString);
 };
 
 #endif // WORKER_H
