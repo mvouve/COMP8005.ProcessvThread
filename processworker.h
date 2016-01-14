@@ -11,7 +11,7 @@ public:
     int start();
     void wait();
 private:
-    pid_t childId;
+    pid_t childId_;
 };
 
 #endif // PROCESSWORKER_H

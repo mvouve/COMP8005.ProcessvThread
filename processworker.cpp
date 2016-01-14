@@ -11,7 +11,7 @@ int ProcessWorker::start()
     case -1:
         break;
     default:
-        childId = pid;
+        childId_ = pid;
         return pid;
     }
 
@@ -19,5 +19,5 @@ int ProcessWorker::start()
 }
 
 void ProcessWorker::wait() {
-    waitpid(childId, NULL, 0);
+    waitpid(childId_, NULL, 0);
 }
