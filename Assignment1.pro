@@ -13,11 +13,11 @@ SOURCES += main.cpp \
     controller.cpp \
     worker.cpp \
     pthreadworker.cpp \
-    processworker.cpp
+    processworker.cpp \
 
 HEADERS += \
     controller.h \
     worker.h \
     pthreadworker.h \
-    processworker.h
+    processworker.h \
 
