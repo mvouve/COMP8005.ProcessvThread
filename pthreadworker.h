@@ -10,11 +10,11 @@ class PThreadWorker : public Worker
 public:
     using Worker::Worker;
     ~PThreadWorker();
-    static void *begin(void *);
     int start();
     void wait();
 private:
     pthread_t thread;
+    static void *begin(void *);
 };
 
 #endif // PTHREADWORKER_H

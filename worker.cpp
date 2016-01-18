@@ -1,9 +1,15 @@
 #include "worker.h"
-#include <cmath>
-#include <unistd.h>
-#include <QDebug>
-#include <QTime>
 
+//!
+//! \author Marc Vouve
+//! \designer Marc Vouve
+//! \date January 8, 2015
+//! \revision January 15, balenced work out better.
+//! \brief Worker::run the main algorithm used by worker classes.
+//!                     both worker classes use the exact same code in execution.
+//!                     this version of run calculates prime numbers based off it's
+//!                     members threadNo_, the maxPrime_ and totalThreads_.
+//!
 void Worker::run()
 {
     bool notPrime;
@@ -11,16 +17,10 @@ void Worker::run()
     QTime t;
 
     t.start();
-
-    //qDebug() << threadNo_;
-    quint64 i;
-    for(i = threadNo_ + 1; i < maxPrime_; i += totalThreads_)
+    // assign i as 1 above 0
+    for(quint64 i = threadNo_ + 1; i < maxPrime_; i += totalThreads_)
     {
-        // if i == totalThreads_, its the first itteration, will never be prime
-        if(i == totalThreads_)
-        {
-            i = 1;
-        }
+
         quint64 square = ceil(sqrt(i));
         notPrime = false;
 
@@ -36,11 +36,14 @@ void Worker::run()
         {
             out << i << "\n";
         }
+
+        // if i == totalThreads_ in its the first itteration, i will never be prime again
+        // as it will always be divisible by the number of iterations. this will result in
+        // repitition of some numbers but that's okay for this usecase.
+        if(i == totalThreads_)
+            i++;
     }
-
     qDebug() <<"Worker :" << threadNo_ << " completed after: " << t.elapsed() << "ms\n";
-
-
 }
 
 

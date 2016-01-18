@@ -2,8 +2,14 @@
 #include <unistd.h>
 #include <QFile>
 
-//!#
-//! This is the main function for the controlling thread. It takes care of all the set up for the child threads. and monitors when they return.
+//!
+//! \author Marc Vouve
+//! \designer Marc Vouve
+//! \date Janurary 9, 2015
+//!
+//! \brief Controller::run this is the main function in the controller class
+//! creates childern and waits for them to finish. on completion prints the total elapsed time.
+//!
 void Controller::run() {
     stopWatch_.start();
     QVector<Worker *> workers;

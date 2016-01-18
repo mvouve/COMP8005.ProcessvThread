@@ -1,11 +1,10 @@
 #ifndef WORKER_H
 #define WORKER_H
 
-#include <fstream>
-#include <QTypeInfo>
 #include <QFile>
 #include <QTextStream>
-#include <QSystemSemaphore>
+#include <cmath>
+#include <QTime>
 
 class Worker
 {
